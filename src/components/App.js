@@ -4,16 +4,21 @@ import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
+import Card from './Card';
 
 function App() {
 const [isOpen, setIsOpen] = React.useState(false)
 const [isOpenEditProfile, setIsOpenEditProfile] = React.useState(false)
 const [isOpenEditAva, setIsOpenEditAva] = React.useState(false)
 const [isOpenAddPlace, setIsOpenAddPlace] = React.useState(false)
+const [selectedCard, setSelectedCard] = React.useState([])
+const [isOpenImage, setIsOpenImage] = React.useState(false)
+
+
+
 
   function handleEditProfileClick () {
     setIsOpenEditProfile(!isOpenEditProfile)
-
   }
   function handleEditAvatarClick () {
     setIsOpenEditAva(!isOpenEditAva)
@@ -21,12 +26,17 @@ const [isOpenAddPlace, setIsOpenAddPlace] = React.useState(false)
   }
   function handleAddPlaceClick () {
     setIsOpenAddPlace(!isOpenAddPlace)
-
   }
+  function handleCardClick (card) {
+    setSelectedCard(card)
+    setIsOpenImage(!isOpenImage)
+  }
+
   function closeAllPopups () {
   setIsOpenEditProfile(false)
   setIsOpenEditAva(false)
   setIsOpenAddPlace(false)
+  setIsOpenImage(false)
   }
 
 
@@ -35,7 +45,7 @@ const [isOpenAddPlace, setIsOpenAddPlace] = React.useState(false)
     <div classNameName="App">
       <body className="page">
         <Header />
-        <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick}/>
+        <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick}/>
         <Footer />
         <PopupWithForm name="edit-profile" title="Редактировать профиль" isOpen={isOpenEditProfile} onClick={closeAllPopups}>
           <input
@@ -97,15 +107,9 @@ const [isOpenAddPlace, setIsOpenAddPlace] = React.useState(false)
         </PopupWithForm>
         <PopupWithForm name="delete-place" title="Вы уверены?" isOpen={isOpen}>
         </PopupWithForm>
-  
-    <div className="popup popup_dart-bg" id="photoPopup">
-      <div className="popup__container">
-          <button className="popup__close" type="button"></button>
-          <img className="popup__image" src="images/Elbrus.png" alt="место" />
-          <h3 className="popup__image-name"></h3>
-      </div>
-    </div>
-</body>
+        <ImagePopup card={selectedCard} isOpen={isOpenImage} onClick={closeAllPopups}>
+        </ImagePopup>
+      </body>
     </div>
   );
 }
