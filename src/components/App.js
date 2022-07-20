@@ -7,6 +7,9 @@ import ImagePopup from './ImagePopup';
 import Card from './Card';
 import api from '../utils/Api'
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditProfilePopup';
+
 
 function App() {
   const [isOpen, setIsOpen] = React.useState(false)
@@ -62,7 +65,7 @@ function App() {
   }
   function handleEditAvatarClick() {
     setIsOpenEditAva(!isOpenEditAva)
-
+    console.log(isOpenEditAva)
   }
   function handleAddPlaceClick() {
     setIsOpenAddPlace(!isOpenAddPlace)
@@ -76,6 +79,21 @@ function App() {
     setIsOpenEditAva(false)
     setIsOpenAddPlace(false)
     setSelectedCard({name: '', link: ''})
+  }
+  function handleUpdateUser(obj) {
+    api.postUserInfo('/users/me', obj)
+    .then((res) => {
+      setCurrentUser(res);
+      closeAllPopups();
+    })
+  }
+
+  function handleUpdateAvatar(obj) {
+    api.postUserInfo('/users/me/avatar', obj)
+    .then((res) => {
+      setCurrentUser(res);
+      closeAllPopups();
+    })
   }
 
   return (
@@ -91,41 +109,9 @@ function App() {
             onLikeCard={handleCardLike}
             onDeleteCard={handleCardDelete}/>
             <Footer />
-            <PopupWithForm name="edit-profile" title="Редактировать профиль" buttonText="Сохранить" isOpen={isOpenEditProfile} onClick={closeAllPopups}>
-              <input
-                type="text"
-                className="popup__input"
-                id='nameInput'
-                name="name"
-                value=""
-                placeholder="Имя пользователя"
-                minLength="2"
-                maxLength="40"
-                required />
-              <span className="nameInput-error"></span>
-              <input
-                type="text"
-                className="popup__input"
-                id='jobInput'
-                name="job"
-                value=""
-                placeholder="Род деятельности"
-                minLength="2"
-                maxLength="200"
-                required />
-              <span className="jobInput-error"></span>
-            </PopupWithForm>
-            <PopupWithForm name="edit-ava" title="Обновить аватар" buttonText="Сохранить" isOpen={isOpenEditAva} onClick={closeAllPopups}>
-              <input
-                type="url"
-                className="popup__input"
-                id='avaLink'
-                name="avaLink"
-                value=""
-                placeholder="Ссылка на картинку"
-                required />
-              <span className="avaLink-error"></span>
-            </PopupWithForm>
+            <EditProfilePopup isOpen={isOpenEditProfile} onClick={closeAllPopups} onUpdateUser={handleUpdateUser} />
+            <EditAvatarPopup isOpen={isOpenEditAva} onClick={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
+           
             <PopupWithForm name="add-place" title="Новое место" buttonText="Добавить" isOpen={isOpenAddPlace} onClick={closeAllPopups}>
               <input
                 type="text"
