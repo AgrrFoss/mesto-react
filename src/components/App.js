@@ -8,7 +8,8 @@ import Card from './Card';
 import api from '../utils/Api'
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import EditProfilePopup from './EditProfilePopup';
-import EditAvatarPopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
 
 
 function App() {
@@ -86,6 +87,9 @@ function App() {
       setCurrentUser(res);
       closeAllPopups();
     })
+    .catch(err => {
+      console.log(err)
+    });
   }
 
   function handleUpdateAvatar(obj) {
@@ -94,7 +98,19 @@ function App() {
       setCurrentUser(res);
       closeAllPopups();
     })
+    .catch(err => {
+      console.log(err)
+    });
   }
+
+  function handleAddPlaceSubmit(obj) {
+    api.postCard('/cards', obj)
+    .then((newCard) => {
+      setCards([newCard, ...cards])
+      closeAllPopups();
+    })
+  }
+
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -111,30 +127,9 @@ function App() {
             <Footer />
             <EditProfilePopup isOpen={isOpenEditProfile} onClick={closeAllPopups} onUpdateUser={handleUpdateUser} />
             <EditAvatarPopup isOpen={isOpenEditAva} onClick={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
-           
-            <PopupWithForm name="add-place" title="Новое место" buttonText="Добавить" isOpen={isOpenAddPlace} onClick={closeAllPopups}>
-              <input
-                type="text"
-                className="popup__input"
-                id='placeNameInput'
-                name="placeName"
-                value=""
-                placeholder="Название"
-                minLength="2"
-                maxLength="30"
-                required
-              />
-              <span className="placeNameInput-error"></span>
-              <input
-                type="url"
-                className="popup__input"
-                id='placeLinkInput'
-                name="link"
-                value=""
-                placeholder="Ссылка на картинку"
-                required />
-              <span className="placeLinkInput-error"></span>
-            </PopupWithForm>
+            <AddPlacePopup isOpen={isOpenAddPlace} onClick={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
+
+            
             <PopupWithForm name="delete-place" title="Вы уверены?" buttonText="Да" isOpen={isOpen}>
             </PopupWithForm>
             <ImagePopup card={selectedCard} onClick={closeAllPopups}>

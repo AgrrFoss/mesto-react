@@ -5,16 +5,29 @@ import PopupWithForm from './PopupWithForm';
 
 function EditAvatarPopup(props) {
   
-    
+   /*  const [value, setValue] = React.useState()
     const inputRef = React.useRef()
-
 
     function handleSubmit (e) {
         e.preventDefault();
         props.onUpdateAvatar({
-            avatar: inputRef.current.value,
+            avatar: value,
           });
     }
+    
+    function handleChange(e) {
+        setValue(e.target.value)
+    } */
+
+    const inputRef = React.useRef('')
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        props.onUpdateAvatar({
+          avatar: inputRef.current.value,
+        });
+        inputRef.current.value=''
+      }
 
 
   return (
@@ -26,7 +39,6 @@ function EditAvatarPopup(props) {
         className="popup__input"
         id='avaLink'
         name="avaLink"
-        value=""
         placeholder="Ссылка на картинку"
         required />
         <span className="avaLink-error"></span>

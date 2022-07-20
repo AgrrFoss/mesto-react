@@ -16,7 +16,7 @@ function EditProfilePopup(props) {
     },
     [userInfo])
 
-    function handleNameCange(e) {
+    function handleNameChange(e) {
         setName(e.target.value)
     }
     function handleDescriptionCange(e) {
@@ -41,7 +41,7 @@ function EditProfilePopup(props) {
                 id='nameInput'
                 name="name"
                 value={name}
-                onChange={handleNameCange}
+                onChange={handleNameChange}
                 placeholder="Имя пользователя"
                 minLength="2"
                 maxLength="40"
