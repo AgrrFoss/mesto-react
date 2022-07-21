@@ -4,8 +4,8 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function AddPlacePopup(props) {
   
-    const [name, setName] = React.useState()
-    const [link, setLink] = React.useState()
+    const [name, setName] = React.useState('')
+    const [link, setLink] = React.useState('')
 
     function handleNameChange(e) {
         setName(e.target.value)
@@ -14,14 +14,18 @@ function AddPlacePopup(props) {
         setLink(e.target.value)
     }
 
+    React.useEffect(() => {
+      setName('')
+      setLink('')
+     },
+     [props.isOpen])
+
     function handleSubmit (e) {
         e.preventDefault();
         props.onAddPlace ({
             name,
             link,
         })
-        setName('')
-        setLink('')
     }
 
   return (
@@ -51,8 +55,6 @@ function AddPlacePopup(props) {
                 required />
               <span className="placeLinkInput-error"></span>
             </PopupWithForm>
-
-    
   );
 }
 

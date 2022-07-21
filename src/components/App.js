@@ -128,8 +128,6 @@ function App() {
             <EditProfilePopup isOpen={isOpenEditProfile} onClick={closeAllPopups} onUpdateUser={handleUpdateUser} />
             <EditAvatarPopup isOpen={isOpenEditAva} onClick={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
             <AddPlacePopup isOpen={isOpenAddPlace} onClick={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
-
-            
             <PopupWithForm name="delete-place" title="Вы уверены?" buttonText="Да" isOpen={isOpen}>
             </PopupWithForm>
             <ImagePopup card={selectedCard} onClick={closeAllPopups}>
