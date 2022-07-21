@@ -14,7 +14,6 @@ function Card(props) {
     props.onCardDelete(props.card);
   }
 
-
   const userInfo = React.useContext(CurrentUserContext)
   const isOwn = props.card.owner._id === userInfo._id;
   const isLiked = props.card.likes.some(i => i._id === userInfo._id);
@@ -23,12 +22,6 @@ function Card(props) {
     `${isOwn ? 'element__delete' : 'element__delete_hidden'}`
   ); 
   const cardLikeButtonClassName = (`${isLiked ? 'element__like element__like_active' : 'element__like'}`); 
-
-// Определяем, есть ли у карточки лайк, поставленный текущим пользователем
-
-// Создаём переменную, которую после зададим в `className` для кнопки лайка
-
-
 
   return (
     <li className="element">

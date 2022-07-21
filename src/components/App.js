@@ -11,7 +11,6 @@ import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 
-
 function App() {
   const [isOpen, setIsOpen] = React.useState(false)
   const [isOpenEditProfile, setIsOpenEditProfile] = React.useState(false);
@@ -19,7 +18,7 @@ function App() {
   const [isOpenAddPlace, setIsOpenAddPlace] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({name: '', link: ''});
 
-  const [currentUser, setCurrentUser] = React.useState(false);
+  const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([])
 
   React.useEffect(() => {
@@ -66,7 +65,6 @@ function App() {
   }
   function handleEditAvatarClick() {
     setIsOpenEditAva(!isOpenEditAva)
-    console.log(isOpenEditAva)
   }
   function handleAddPlaceClick() {
     setIsOpenAddPlace(!isOpenAddPlace)
@@ -109,8 +107,10 @@ function App() {
       setCards([newCard, ...cards])
       closeAllPopups();
     })
+    .catch(err => {
+      console.log(err)
+    });
   }
-
 
   return (
     <CurrentUserContext.Provider value={currentUser}>

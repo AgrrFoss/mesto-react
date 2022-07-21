@@ -7,7 +7,6 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, cards, onL
 
   const userInfo = React.useContext(CurrentUserContext)
 
-
   return (
     <main className="content">
       <section className="profile">
